@@ -30,7 +30,7 @@ EmployeeService/EmployeeService.API/appsettings.json
 
 You can find "ConnectionString" parameter from JSON and be able to change it.
 
-Both services uses localhost and root user without password.
+Both services uses localhost and root user without password as default.
 
 ## Usage
 
@@ -50,4 +50,4 @@ After authenticate process please provide given token to wherever you are doing 
 
 You should able to see request and response schemes from SwaggerUI.
 
-![alt text](https://imgur.com/a/1RpMxqo)
+![auth_service](https://i.imgur.com/yXnUHNI.png)
