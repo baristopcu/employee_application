@@ -72,7 +72,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'adminuser','Password123',1,'2022-09-20 15:01:00'),(2,'basic user','Password',2,'2022-09-20 15:00:00');
+INSERT INTO `Users` VALUES (1,'adminuser','Password123',1,'2022-09-20 15:01:00'),(2,'basicuser','Password',2,'2022-09-20 15:00:00');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 
