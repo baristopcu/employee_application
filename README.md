@@ -13,7 +13,7 @@ AuthenticationDB-WithUsersData.sql
 EmployeeDB-WithEmployeeData.sql
 ```
 
-You can find those scripts in root of project. They are going to create databases with named "AuthenticationServiceDB" and "EmployeeServiceDB". If you have databases with same name, please edit script to prevent data loss.
+You can find those scripts in root of project. They are going to create databases with named "AuthenticationDB" and "EmployeeDB". If you have databases with same name, please edit script to prevent data loss.
 
 Second step is changing connection string if its required. Connection strings locations are below:
 
