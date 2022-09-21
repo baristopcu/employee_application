@@ -51,9 +51,11 @@ namespace EmployeeService.API.Middleware
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "user_id").Value);
+                var userRoleName = jwtToken.Claims.First(x => x.Type == "role_name").Value;
 
                 // attach user to context on successful jwt validation
                 context.Items["user_id"] = userId;
+                context.Items["role_name"] = userRoleName;
             }
             catch
             {

@@ -23,7 +23,7 @@ namespace AuthenticationService.Business.Services
 
         public async Task<string> Authenticate(string username, string password)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(x => x.Username == username && x.Password == password);
+            var user = await _userRepository.SingleOrDefaultAsync(x => x.Username == username && x.Password == password, i => i.Role);
 
             if (user == null)
                 return string.Empty;
@@ -35,13 +35,14 @@ namespace AuthenticationService.Business.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("user_id", user.Id.ToString())
+                    new Claim("user_id", user.Id.ToString()),
+                    new Claim("role_name", user.Role.RoleName.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            string strToken = tokenHandler.WriteToken(token);
+            string strToken = "Bearer " + tokenHandler.WriteToken(token);
 
             return strToken;
         }

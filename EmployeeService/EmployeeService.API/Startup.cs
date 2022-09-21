@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using AutoMapper;
+using EmployeeService.API.AutoMapperProfiles;
 using EmployeeService.API.Middleware;
 using EmployeeService.Business.Interfaces;
 using EmployeeService.BusinessLayer.Repositories;
@@ -12,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 
 namespace EmployeeService.API
 {
@@ -60,19 +65,49 @@ namespace EmployeeService.API
                 };
             });
 
-
-            services.AddSwaggerGen(c =>
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
             {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Employee Service", Version = "v1" });
-                c.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
-                {
-                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Name = "Authorization",
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
-                });
-
+                mc.AddProfile(new MainProfile());
             });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddSwaggerGen(
+                c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employee Service", Version = "v1" });
+                    c.AddSecurityDefinition(
+                        "token",
+                        new OpenApiSecurityScheme
+                        {
+                            Type = SecuritySchemeType.Http,
+                            BearerFormat = "JWT",
+                            Scheme = "Bearer",
+                            In = ParameterLocation.Header,
+                            Name = HeaderNames.Authorization
+                        }
+                    );
+                    c.AddSecurityRequirement(
+                        new OpenApiSecurityRequirement
+                        {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "token"
+                        },
+                    },
+                    Array.Empty<string>()
+                }
+                        }
+                    );
+                }
+            );
+
 
             services.AddTransient<IGenericRepository<Employee>, GenericRepository<Employee>>();
         }

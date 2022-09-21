@@ -8,10 +8,14 @@
     <None Remove="Context\" />
     <None Remove="Entities\" />
     <None Remove="Pomelo.EntityFrameworkCore.MySql" />
+    <None Remove="Enums\" />
+    <None Remove="DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Context\" />
     <Folder Include="Entities\" />
+    <Folder Include="Enums\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.7" />

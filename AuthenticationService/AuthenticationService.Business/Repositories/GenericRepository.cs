@@ -27,9 +27,19 @@ namespace AuthenticationService.Business.Repositories
             await _authenticationContext.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
-            return _authenticationContext.Set<TEntity>().Where(predicate);
+            var query = _authenticationContext.Set<TEntity>().Where(predicate).AsQueryable();
+
+
+            if (includes != null)
+            {
+                query = includes.Aggregate(query,
+                          (current, include) => current.Include(include));
+            }
+
+            return await query.ToListAsync();
+
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -37,9 +47,9 @@ namespace AuthenticationService.Business.Repositories
             return await _authenticationContext.Set<TEntity>().ToListAsync();
         }
 
-        public ValueTask<TEntity> GetByIdAsync(int id)
+        public async ValueTask<TEntity> GetByIdAsync(int id)
         {
-            return _authenticationContext.Set<TEntity>().FindAsync(id);
+            return await _authenticationContext.Set<TEntity>().FindAsync(id);
         }
 
         public void Remove(TEntity entity)
@@ -52,9 +62,41 @@ namespace AuthenticationService.Business.Repositories
             _authenticationContext.Set<TEntity>().RemoveRange(entities);
         }
 
-        public Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
-            return _authenticationContext.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            var query = _authenticationContext.Set<TEntity>().Where(predicate).AsQueryable();
+
+            if (includes != null)
+            {
+                query = includes.Aggregate(query,
+                          (current, include) => current.Include(include));
+            }
+
+
+            return await query.SingleOrDefaultAsync();
+        }
+
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        {
+            var query = _authenticationContext.Set<TEntity>().Where(predicate).AsQueryable();
+
+            if (includes != null)
+            {
+                query = includes.Aggregate(query,
+                          (current, include) => current.Include(include));
+            }
+
+
+            return await query.FirstOrDefaultAsync();
+        }
+        public void Update(TEntity tEntity)
+        {
+            _authenticationContext.Entry(tEntity).State = EntityState.Modified;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _authenticationContext.SaveChangesAsync();
         }
     }
 }
