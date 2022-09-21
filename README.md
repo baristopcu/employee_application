@@ -13,7 +13,7 @@ AuthenticationDB-WithUsersData.sql
 EmployeeDB-WithEmployeeData.sql
 ```
 
-You can find those scripts in root of projects. They are going to create databases with named "AuthenticationServiceDB" and "EmployeeServiceDB". If you have databases with same name, please edit script to prevent data loss.
+You can find those scripts in root of project. They are going to create databases with named "AuthenticationServiceDB" and "EmployeeServiceDB". If you have databases with same name, please edit script to prevent data loss.
 
 Second step is changing connection string if its required. Connection strings locations are below:
 
@@ -46,7 +46,10 @@ Test users to authenticate (Scripts includes those data) :
 
 2- basicuser - Password (Basic user, only reads data)
 
-After authenticate process please provide given token to wherever you are doing test from. (Swagger or Postman etc.)
+Run and authenticate from AuthenticateService.
+After authenticate process please provide given token to EmployeeService by wherever you are doing test from. (Swagger or Postman etc.)
+
+![auth_service](https://i.imgur.com/yXnUHNI.png)
 
 You should able to see request and response schemes from SwaggerUI.
 
