@@ -23,7 +23,7 @@ namespace AuthenticationService.Business.Services
 
         public async Task<string> Authenticate(string username, string password)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(x => x.Username == username && x.Password == password, i => i.Role);
+            var user = await _userRepository.SingleOrDefaultAsync(x => x.Username.Equals(username, StringComparison.Ordinal) && x.Password.Equals(password, StringComparison.Ordinal), i => i.Role);
 
             if (user == null)
                 return string.Empty;
