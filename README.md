@@ -36,7 +36,7 @@ Both services uses localhost and root user without password as default.
 
 After installation, you'll have two database with some data in it like users, employees and roles.
 
-Start both service, AuthenticationService will use 5001 port and EmployeeService will use 6001 port if you dont change port settings.
+Start both service, AuthenticationService will use 5001 port and EmployeeService will use 6001 port if you dont change port settings. It may change if you use IISExpress like (44334 port number for EmployeeService, 44349 port number for AuthenticationService), please use given port if its changes somehow.
 
 Both services have SwaggerUI in it and you can use this UI to test project.
 
