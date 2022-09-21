@@ -4,7 +4,7 @@ Employee application is a simple project that have AuthenticationService and Emp
 
 ## Installation
 
-Please run two MySql scripts below before starting projects.
+Please run two MySql scripts below before starting projects. This app uses .Net Core 3.1
 
 ```bash
 AuthenticationDB-WithUsersData.sql
