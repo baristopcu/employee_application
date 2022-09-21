@@ -49,7 +49,7 @@ Test users to authenticate (Scripts includes those data) :
 Run and authenticate from AuthenticateService.
 After authenticate process please provide given token to EmployeeService by wherever you are doing test from. (Swagger or Postman etc.)
 
-![auth_service](https://i.imgur.com/yXnUHNI.png)
+![auth_service](https://i.imgur.com/tCsg53G.png)
 
 You should able to see request and response schemes from SwaggerUI.
 
